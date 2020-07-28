@@ -1,34 +1,47 @@
 package com.hoang.nfcdemoapp
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter: NfcAdapter? = null
     private val sharedPref: SharedPrefManager = SharedPrefManager(this)
     private lateinit var mTurnNfcDialog: AlertDialog
+    val nfcServiceIntent = Intent(this, KHostApduService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        val filter = IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED)
+        if (!sharedPref.getString("NFC_UID","").isBlank()) {
+            bt_nfc.visibility = View.INVISIBLE
+        }
         bt_nfc.setOnClickListener {
             if (checkNfcEnabled() && packageManager.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
                 initNfcService()
+                bt_nfc.visibility = View.INVISIBLE
             } else {
                 showTurnOnNfcDialog()
             }
         }
         bt_transaction.setOnClickListener {
             val i = Intent(this, NfcTransactionActivity::class.java)
+            i.putExtra("NFC_UID", getNfcUid())
             startActivity(i)
         }
     }
@@ -43,18 +56,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNfcService() {
         val intent = Intent(this, KHostApduService::class.java)
-        Log.d("H.NH", "Card UID:" + getCardUid())
-        intent.putExtra("ndefMessage", getCardUid())
+        intent.putExtra("ndefMessage", getNfcUid())
         startService(intent)
     }
 
-    private fun getCardUid(): String {
+    private fun getNfcUid(): String {
         return if (sharedPref.getString("NFC_UID", "").isBlank()) {
             var result = ""
             val random = Random()
             for (i in 0..14) {
                 val nextInt = random.nextInt(16)
-                result = result + Integer.toHexString(nextInt).toUpperCase()
+                result += Integer.toHexString(nextInt).toUpperCase()
             }
             Log.d("H.NH", "Generated card id:$result")
             sharedPref.putString("NFC_UID", result)
@@ -83,4 +95,16 @@ class MainActivity : AppCompatActivity() {
         mTurnNfcDialog.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!sharedPref.getString("NFC_UID","").isBlank()) {
+            Handler().postDelayed({
+                initNfcService()
+            }, 3000)
+        }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService(nfcServiceIntent)
+    }
 }

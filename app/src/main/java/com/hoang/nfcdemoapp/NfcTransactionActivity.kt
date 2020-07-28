@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TextView
+import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class NfcTransactionActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val nfcUid = intent.getStringExtra("NFC_UID")
         setContentView(R.layout.activity_nfc_transactions)
         val tableLayout = findViewById<TableLayout>(R.id.nfc_tb_layout)
-        RetrofitService.nfcNetworkService.getNfcTransaction("0461894a1c4d80")
+        RetrofitService.nfcNetworkService.getNfcTransaction(nfcUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({
@@ -25,6 +27,7 @@ class NfcTransactionActivity: AppCompatActivity() {
                         tableLayout.addView(rowLayout)
                     }
                 }, {
+                    Toast.makeText(this, "Không thể tải thông tin giao dịch của ID: ${nfcUid}.", Toast.LENGTH_LONG).show()
                     it.printStackTrace()
                 })
     }
