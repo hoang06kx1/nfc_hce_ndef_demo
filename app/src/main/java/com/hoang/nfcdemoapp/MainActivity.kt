@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         bt_transaction.setOnClickListener {
-
+            val i = Intent(this, NfcTransactionActivity::class.java)
+            startActivity(i)
         }
     }
 
