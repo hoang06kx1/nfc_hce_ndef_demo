@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow android:background="#DAE8FC"
+    android:padding="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:id="@+id/tv_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1"
+        />
+
+    <TextView
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2019 Nov 13" />
+
+    <TextView
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="50000" />
+    <TextView
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Hell year" />
+</TableRow>

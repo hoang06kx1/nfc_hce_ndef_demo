@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">NfcDemoApp</string>
+    <string name="ad_nfcTurnOn_title">NFC is turned off.</string>
+    <string name="ad_nfcTurnOn_message">You need turn on NFC module for scanning. Wish turn on it now?</string>
+    <string name="tv_noNfc">There is no NFC module on this device</string>
+    <string name="ad_nfcTurnOn_pos">Turn on</string>
+    <string name="ad_nfcTurnOn_neg">Dismiss</string>
+    <string name="servicedesc">servicedesc</string>
+    <string name="aiddescription">aiddescription</string>
+    <string name="find_place">Find place</string>
+    <string name="find_nearby">Find nearby</string>
+    <string name="no">No</string>
+    <string name="date">Date</string>
+    <string name="amount">Amount</string>
+    <string name="payment_info">Info</string>
+    <string name="nfc_transaction">NFC payment transaction</string>
+</resources>
