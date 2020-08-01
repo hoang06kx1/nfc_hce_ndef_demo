@@ -2,64 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="21sp"
-        android:textStyle="bold"
         android:layout_marginTop="36dp"
-        android:text="@string/nfc_transaction" />
+        android:text="@string/nfc_transaction"
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_gravity="center"
+        android:id="@+id/tv_uid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_uid"
-        android:text="UID:"/>
+        android:layout_gravity="center"
+        android:text="UID:" />
 
-    <TableLayout
-        android:stretchColumns="3"
-        android:id="@+id/nfc_tb_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="24dp">
+        android:layout_height="match_parent">
 
-        <TableRow
-            android:background="#0079D6"
-            android:padding="5dp">
+        <TableLayout
+            android:id="@+id/nfc_tb_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:stretchColumns="3">
 
-            <TextView
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no" />
+            <TableRow
+                android:background="#0079D6"
+                android:padding="5dp">
 
-            <TextView
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="@string/no" />
 
-            <TextView
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/amount" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="@string/date" />
 
-            <TextView
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/payment_info" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="@string/amount" />
 
-    </TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="@string/payment_info" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>
