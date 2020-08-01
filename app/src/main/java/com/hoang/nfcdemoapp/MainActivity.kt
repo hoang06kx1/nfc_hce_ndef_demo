@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         return if (sharedPref.getString("NFC_UID", "").isBlank()) {
             var result = ""
             val random = Random()
-            for (i in 0..14) {
+            for (i in 0 until 14) {
                 val nextInt = random.nextInt(16)
                 result += Integer.toHexString(nextInt).toUpperCase()
             }

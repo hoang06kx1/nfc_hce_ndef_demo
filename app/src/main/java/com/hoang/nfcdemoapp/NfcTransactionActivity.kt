@@ -21,7 +21,7 @@ class NfcTransactionActivity: AppCompatActivity() {
                 .subscribe ({
                     it.getTravelerByCardUIDResult.firstOrNull()?.AccTransactionInfo?.forEachIndexed {index, data ->
                         val rowLayout = layoutInflater.inflate(R.layout.layout_nfc_transaction_row, null)
-                        rowLayout.findViewById<TextView>(R.id.tv_no).text = index.toString()
+                        rowLayout.findViewById<TextView>(R.id.tv_no).text = (index + 1).toString()
                         rowLayout.findViewById<TextView>(R.id.tv_date).text = data.TransactionDate
                         rowLayout.findViewById<TextView>(R.id.tv_amount).text = data.Amount.toString()
                         rowLayout.findViewById<TextView>(R.id.tv_info).text = data.Content + "/" + data.MerchantName
