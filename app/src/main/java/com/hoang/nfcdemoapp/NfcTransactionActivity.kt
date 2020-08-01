@@ -13,6 +13,7 @@ class NfcTransactionActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val nfcUid = intent.getStringExtra("NFC_UID")
         setContentView(R.layout.activity_nfc_transactions)
+        findViewById<TextView>(R.id.tv_uid).text = "UID: ${nfcUid}"
         val tableLayout = findViewById<TableLayout>(R.id.nfc_tb_layout)
         RetrofitService.nfcNetworkService.getNfcTransaction(nfcUid)
                 .subscribeOn(Schedulers.io())

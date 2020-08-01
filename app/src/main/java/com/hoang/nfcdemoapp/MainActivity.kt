@@ -21,13 +21,11 @@ class MainActivity : AppCompatActivity() {
     private var mNfcAdapter: NfcAdapter? = null
     private val sharedPref: SharedPrefManager = SharedPrefManager(this)
     private lateinit var mTurnNfcDialog: AlertDialog
-    val nfcServiceIntent = Intent(this, KHostApduService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        val filter = IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED)
         if (!sharedPref.getString("NFC_UID","").isBlank()) {
             bt_nfc.visibility = View.INVISIBLE
         }
@@ -105,6 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        stopService(nfcServiceIntent)
+        val nfcIntent = Intent(this, KHostApduService::class.java)
+        stopService(nfcIntent)
     }
 }
