@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getNfcUid(): String {
-        return "3779459759ED14"
         return if (sharedPref.getString("NFC_UID", "").isBlank()) {
             var result = ""
             val random = Random()

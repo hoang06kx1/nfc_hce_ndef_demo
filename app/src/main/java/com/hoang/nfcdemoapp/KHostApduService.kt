@@ -122,7 +122,7 @@ class KHostApduService : HostApduService() {
 
         Log.i(TAG, "onStartCommand() | NDEF" + NDEF_URI.toString())
 
-        return Service.START_STICKY
+        return Service.START_NOT_STICKY
     }
 
     override fun processCommandApdu(commandApdu: ByteArray, extras: Bundle?): ByteArray {
