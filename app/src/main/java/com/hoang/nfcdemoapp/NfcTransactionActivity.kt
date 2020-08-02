@@ -1,12 +1,16 @@
 package com.hoang.nfcdemoapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.text.DateFormat
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NfcTransactionActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +26,8 @@ class NfcTransactionActivity: AppCompatActivity() {
                     it.getTravelerByCardUIDResult.firstOrNull()?.AccTransactionInfo?.forEachIndexed {index, data ->
                         val rowLayout = layoutInflater.inflate(R.layout.layout_nfc_transaction_row, null)
                         rowLayout.findViewById<TextView>(R.id.tv_no).text = (index + 1).toString()
-                        rowLayout.findViewById<TextView>(R.id.tv_date).text = data.TransactionDate
-                        rowLayout.findViewById<TextView>(R.id.tv_amount).text = data.Amount.toString()
+                        rowLayout.findViewById<TextView>(R.id.tv_date).text = data.TransactionDate.toDate("M/d/yyyy hh:mm:ss aa")?.toLocalizedString()
+                        rowLayout.findViewById<TextView>(R.id.tv_amount).text = formatCurrency(data.Amount)
                         rowLayout.findViewById<TextView>(R.id.tv_info).text = data.Content + "/" + data.MerchantName
                         tableLayout.addView(rowLayout)
                     }
@@ -31,6 +35,29 @@ class NfcTransactionActivity: AppCompatActivity() {
                     Toast.makeText(this, "Không thể tải thông tin giao dịch của ID: ${nfcUid}.", Toast.LENGTH_LONG).show()
                     it.printStackTrace()
                 })
+    }
+
+    private fun String.toDate(dateFormatString: String): Date? {
+        return try {
+            val dateFormat = SimpleDateFormat(dateFormatString)
+            dateFormat.parse(this)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            null
+        }
+    }
+
+    private fun Date?.toLocalizedString(): String {
+        val f =
+            DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
+        return if (this == null) "" else f.format(this)
+    }
+
+    private fun formatCurrency(value: Int): String {
+        val format: NumberFormat = NumberFormat.getCurrencyInstance()
+        format.setMaximumFractionDigits(0)
+        format.setCurrency(Currency.getInstance("VND"))
+        return format.format(value)
     }
 }
 

@@ -22,6 +22,7 @@
         tools:text="2019 Nov 13" />
 
     <TextView
+        android:gravity="right"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:id="@+id/tv_amount"
